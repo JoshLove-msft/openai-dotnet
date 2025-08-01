@@ -260,7 +260,7 @@ try {
     Invoke-ScriptWithLogging { npm run build -w $codegenFolderPath }
 
     Set-Location $specificationFolderPath
-    Invoke-ScriptWithLogging { npm exec --no -- tsp "compile" "." "--stats" }
+    Invoke-ScriptWithLogging { npx --no tsp compile . --stats }
 }
 finally {
     Pop-Location
