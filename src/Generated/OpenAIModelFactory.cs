@@ -8,7 +8,6 @@ using System.Linq;
 using OpenAI.Assistants;
 using OpenAI.Audio;
 using OpenAI.Chat;
-using OpenAI.Containers;
 using OpenAI.Embeddings;
 using OpenAI.Files;
 using OpenAI.FineTuning;
@@ -36,7 +35,7 @@ namespace OpenAI
                 description,
                 model,
                 instructions,
-                tools?.ToList(),
+                tools.ToList(),
                 toolResources,
                 metadata,
                 temperature,
@@ -60,7 +59,7 @@ namespace OpenAI
         {
             fileIds ??= new ChangeTrackingList<string>();
 
-            return new CodeInterpreterToolResources(fileIds?.ToList(), additionalBinaryDataProperties: null);
+            return new CodeInterpreterToolResources(fileIds.ToList(), additionalBinaryDataProperties: null);
         }
 
         public static AssistantCreationOptions AssistantCreationOptions(string name = default, string description = default, string instructions = default, IDictionary<string, string> metadata = default, float? temperature = default, string model = default, IEnumerable<ToolDefinition> tools = default, ToolResources toolResources = default, AssistantResponseFormat responseFormat = default, float? nucleusSamplingFactor = default, ChatReasoningEffortLevel? reasoningEffortLevel = default)
@@ -75,7 +74,7 @@ namespace OpenAI
                 metadata,
                 temperature,
                 model,
-                tools?.ToList(),
+                tools.ToList(),
                 toolResources,
                 responseFormat,
                 nucleusSamplingFactor,
@@ -88,7 +87,7 @@ namespace OpenAI
             vectorStoreIds ??= new ChangeTrackingList<string>();
             newVectorStores ??= new ChangeTrackingList<VectorStoreCreationHelper>();
 
-            return new FileSearchToolResources(vectorStoreIds?.ToList(), newVectorStores?.ToList(), additionalBinaryDataProperties: null);
+            return new FileSearchToolResources(vectorStoreIds.ToList(), newVectorStores.ToList(), additionalBinaryDataProperties: null);
         }
 
         public static VectorStoreCreationHelper VectorStoreCreationHelper(IEnumerable<string> fileIds = default, IDictionary<string, string> metadata = default, FileChunkingStrategy chunkingStrategy = default)
@@ -96,7 +95,7 @@ namespace OpenAI
             fileIds ??= new ChangeTrackingList<string>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
-            return new VectorStoreCreationHelper(fileIds?.ToList(), metadata, chunkingStrategy, additionalBinaryDataProperties: null);
+            return new VectorStoreCreationHelper(fileIds.ToList(), metadata, chunkingStrategy, additionalBinaryDataProperties: null);
         }
 
         public static AssistantModificationOptions AssistantModificationOptions(string name = default, string description = default, string instructions = default, IDictionary<string, string> metadata = default, float? temperature = default, string model = default, IEnumerable<ToolDefinition> defaultTools = default, ToolResources toolResources = default, AssistantResponseFormat responseFormat = default, float? nucleusSamplingFactor = default, ChatReasoningEffortLevel? reasoningEffortLevel = default)
@@ -111,7 +110,7 @@ namespace OpenAI
                 metadata,
                 temperature,
                 model,
-                defaultTools?.ToList(),
+                defaultTools.ToList(),
                 toolResources,
                 responseFormat,
                 nucleusSamplingFactor,
@@ -154,14 +153,14 @@ namespace OpenAI
         {
             transcriptionTokenLogProbabilities ??= new ChangeTrackingList<AudioTokenLogProbabilityDetails>();
 
-            return new StreamingAudioTranscriptionTextDeltaUpdate(StreamingAudioTranscriptionUpdateKind.TranscriptTextDelta, additionalBinaryDataProperties: null, delta, transcriptionTokenLogProbabilities?.ToList());
+            return new StreamingAudioTranscriptionTextDeltaUpdate(StreamingAudioTranscriptionUpdateKind.TranscriptTextDelta, additionalBinaryDataProperties: null, delta, transcriptionTokenLogProbabilities.ToList());
         }
 
         public static StreamingAudioTranscriptionTextDoneUpdate StreamingAudioTranscriptionTextDoneUpdate(string text = default, IEnumerable<AudioTokenLogProbabilityDetails> transcriptionTokenLogProbabilities = default)
         {
             transcriptionTokenLogProbabilities ??= new ChangeTrackingList<AudioTokenLogProbabilityDetails>();
 
-            return new StreamingAudioTranscriptionTextDoneUpdate(StreamingAudioTranscriptionUpdateKind.TranscriptTextDone, additionalBinaryDataProperties: null, text, transcriptionTokenLogProbabilities?.ToList());
+            return new StreamingAudioTranscriptionTextDoneUpdate(StreamingAudioTranscriptionUpdateKind.TranscriptTextDone, additionalBinaryDataProperties: null, text, transcriptionTokenLogProbabilities.ToList());
         }
 
         public static AudioTranslation AudioTranslation(string language = default, string text = default, IEnumerable<TranscribedSegment> segments = default, string task = default, TimeSpan? duration = default)
@@ -171,7 +170,7 @@ namespace OpenAI
             return new AudioTranslation(
                 language,
                 text,
-                segments?.ToList(),
+                segments.ToList(),
                 task,
                 duration,
                 additionalBinaryDataProperties: null);
@@ -186,7 +185,7 @@ namespace OpenAI
         {
             topLogProbabilities ??= new ChangeTrackingList<ChatTokenTopLogProbabilityDetails>();
 
-            return new ChatTokenLogProbabilityDetails(token, logProbability, utf8Bytes, topLogProbabilities?.ToList(), additionalBinaryDataProperties: null);
+            return new ChatTokenLogProbabilityDetails(token, logProbability, utf8Bytes, topLogProbabilities.ToList(), additionalBinaryDataProperties: null);
         }
 
         public static ChatTokenTopLogProbabilityDetails ChatTokenTopLogProbabilityDetails(string token = default, float logProbability = default, ReadOnlyMemory<byte>? utf8Bytes = default)
@@ -250,7 +249,7 @@ namespace OpenAI
                 additionalBinaryDataProperties: null,
                 refusal,
                 participantName,
-                toolCalls?.ToList(),
+                toolCalls.ToList(),
                 functionCall,
                 outputAudioReference);
         }
@@ -304,7 +303,7 @@ namespace OpenAI
         {
             data ??= new ChangeTrackingList<OpenAIEmbedding>();
 
-            return new OpenAIEmbeddingCollection(data?.ToList(), model, @object, usage, serializedAdditionalRawData: null);
+            return new OpenAIEmbeddingCollection(data.ToList(), model, @object, usage, serializedAdditionalRawData: null);
         }
 
         public static OpenAIEmbedding OpenAIEmbedding(int index = default, BinaryData embeddingProperty = default, string @object = default)
@@ -322,7 +321,7 @@ namespace OpenAI
             data ??= new ChangeTrackingList<OpenAIFile>();
 
             return new OpenAIFileCollection(
-                data?.ToList(),
+                data.ToList(),
                 @object,
                 firstId,
                 lastId,
@@ -542,7 +541,7 @@ namespace OpenAI
         {
             data ??= new ChangeTrackingList<GeneratedImage>();
 
-            return new GeneratedImageCollection(data?.ToList(), usage, createdAt, additionalBinaryDataProperties: null);
+            return new GeneratedImageCollection(data.ToList(), usage, createdAt, additionalBinaryDataProperties: null);
         }
 
         public static GeneratedImage GeneratedImage(string revisedPrompt = default, BinaryData imageBytes = default, Uri imageUri = default)
@@ -578,14 +577,14 @@ namespace OpenAI
             metadata ??= new ChangeTrackingDictionary<string, string>();
             content ??= new ChangeTrackingList<MessageContent>();
 
-            return new MessageCreationOptions(attachments?.ToList(), metadata, role, content?.ToList(), additionalBinaryDataProperties: null);
+            return new MessageCreationOptions(attachments.ToList(), metadata, role, content.ToList(), additionalBinaryDataProperties: null);
         }
 
         public static MessageCreationAttachment MessageCreationAttachment(string fileId = default, IEnumerable<ToolDefinition> tools = default)
         {
             tools ??= new ChangeTrackingList<ToolDefinition>();
 
-            return new MessageCreationAttachment(fileId, tools?.ToList(), additionalBinaryDataProperties: null);
+            return new MessageCreationAttachment(fileId, tools.ToList(), additionalBinaryDataProperties: null);
         }
 
         public static ThreadMessage ThreadMessage(string id = default, DateTimeOffset createdAt = default, string threadId = default, Assistants.MessageStatus status = default, MessageFailureDetails incompleteDetails = default, DateTimeOffset? completedAt = default, DateTimeOffset? incompleteAt = default, IEnumerable<MessageContent> content = default, string assistantId = default, string runId = default, IReadOnlyDictionary<string, string> metadata = default, string @object = default, Assistants.MessageRole role = default, IEnumerable<MessageCreationAttachment> attachments = default)
@@ -602,13 +601,13 @@ namespace OpenAI
                 incompleteDetails,
                 completedAt,
                 incompleteAt,
-                content?.ToList(),
+                content.ToList(),
                 assistantId,
                 runId,
                 metadata,
                 @object,
                 role,
-                attachments?.ToList(),
+                attachments.ToList(),
                 additionalBinaryDataProperties: null);
         }
 
@@ -633,7 +632,7 @@ namespace OpenAI
         {
             results ??= new ChangeTrackingList<ModerationResult>();
 
-            return new ModerationResultCollection(id, model, results?.ToList());
+            return new ModerationResultCollection(id, model, results.ToList());
         }
 
         public static ModerationResult ModerationResult(bool flagged = default)
@@ -646,7 +645,7 @@ namespace OpenAI
             metadata ??= new ChangeTrackingDictionary<string, string>();
             internalMessages ??= new ChangeTrackingList<MessageCreationOptions>();
 
-            return new ThreadCreationOptions(metadata, toolResources, internalMessages?.ToList(), additionalBinaryDataProperties: null);
+            return new ThreadCreationOptions(metadata, toolResources, internalMessages.ToList(), additionalBinaryDataProperties: null);
         }
 
         public static RunError RunError(RunErrorCode code = default, string message = default)
@@ -677,9 +676,9 @@ namespace OpenAI
                 modelOverride,
                 instructionsOverride,
                 additionalInstructions,
-                internalMessages?.ToList(),
+                internalMessages.ToList(),
                 allowParallelToolCalls,
-                toolsOverride?.ToList(),
+                toolsOverride.ToList(),
                 metadata,
                 temperature,
                 nucleusSamplingFactor,
@@ -736,7 +735,7 @@ namespace OpenAI
         {
             content ??= new ChangeTrackingList<RunStepFileSearchResultContent>();
 
-            return new RunStepFileSearchResult(fileId, fileName, score, content?.ToList(), additionalBinaryDataProperties: null);
+            return new RunStepFileSearchResult(fileId, fileName, score, content.ToList(), additionalBinaryDataProperties: null);
         }
 
         public static RunStepFileSearchResultContent RunStepFileSearchResultContent(string text = default, RunStepFileSearchResultContentKind kind = default)
@@ -820,7 +819,7 @@ namespace OpenAI
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
             return new VectorStoreCreationOptions(
-                fileIds?.ToList(),
+                fileIds.ToList(),
                 name,
                 metadata,
                 expirationPolicy,
@@ -883,7 +882,7 @@ namespace OpenAI
         {
             data ??= new ChangeTrackingList<OpenAIModel>();
 
-            return new OpenAIModelCollection(@object, data?.ToList(), serializedAdditionalRawData: null);
+            return new OpenAIModelCollection(@object, data.ToList(), serializedAdditionalRawData: null);
         }
 
         public static OpenAIModel OpenAIModel(string id = default, string ownedBy = default, string @object = default, DateTimeOffset createdAt = default)
@@ -1030,7 +1029,7 @@ namespace OpenAI
         {
             allDetails ??= new ChangeTrackingList<ConversationRateLimitDetailsItem>();
 
-            return new RateLimitsUpdate(RealtimeUpdateKind.RateLimitsUpdated, eventId, additionalBinaryDataProperties: null, allDetails?.ToList());
+            return new RateLimitsUpdate(RealtimeUpdateKind.RateLimitsUpdated, eventId, additionalBinaryDataProperties: null, allDetails.ToList());
         }
 
         public static ConversationRateLimitDetailsItem ConversationRateLimitDetailsItem(string name = default, int maximumCount = default, int remainingCount = default, TimeSpan timeUntilReset = default)
@@ -1062,11 +1061,11 @@ namespace OpenAI
             return new AudioTranscription(
                 language,
                 text,
-                words?.ToList(),
-                segments?.ToList(),
+                words.ToList(),
+                segments.ToList(),
                 task,
                 duration,
-                transcriptionTokenLogProbabilities?.ToList(),
+                transcriptionTokenLogProbabilities.ToList(),
                 additionalBinaryDataProperties: null);
         }
 
@@ -1091,142 +1090,6 @@ namespace OpenAI
         public static AudioTokenLogProbabilityDetails AudioTokenLogProbabilityDetails(string token = default, float logProbability = default, ReadOnlyMemory<byte> utf8Bytes = default)
         {
             return new AudioTokenLogProbabilityDetails(token, logProbability, utf8Bytes, additionalBinaryDataProperties: null);
-        }
-
-        public static ContainerListResource ContainerListResource(string @object = default, IEnumerable<ContainerResource> data = default, string firstId = default, string lastId = default, bool hasMore = default)
-        {
-            data ??= new ChangeTrackingList<ContainerResource>();
-
-            return new ContainerListResource(
-                @object,
-                data?.ToList(),
-                firstId,
-                lastId,
-                hasMore,
-                additionalBinaryDataProperties: null);
-        }
-
-        public static ContainerResource ContainerResource(string id = default, string @object = default, string name = default, DateTimeOffset createdAt = default, string status = default, ContainerResourceExpiresAfter expiresAfter = default)
-        {
-            return new ContainerResource(
-                id,
-                @object,
-                name,
-                createdAt,
-                status,
-                expiresAfter,
-                additionalBinaryDataProperties: null);
-        }
-
-        public static ContainerResourceExpiresAfter ContainerResourceExpiresAfter(string anchor = default, int? minutes = default)
-        {
-            return new ContainerResourceExpiresAfter(anchor, minutes, additionalBinaryDataProperties: null);
-        }
-
-        public static CreateContainerBody CreateContainerBody(string name = default, IEnumerable<string> fileIds = default, CreateContainerBodyExpiresAfter expiresAfter = default)
-        {
-            fileIds ??= new ChangeTrackingList<string>();
-
-            return new CreateContainerBody(name, fileIds?.ToList(), expiresAfter, additionalBinaryDataProperties: null);
-        }
-
-        public static CreateContainerBodyExpiresAfter CreateContainerBodyExpiresAfter(string anchor = default, int minutes = default)
-        {
-            return new CreateContainerBodyExpiresAfter(anchor, minutes, additionalBinaryDataProperties: null);
-        }
-
-        public static DeleteContainerResponse DeleteContainerResponse(string id = default, string @object = default, bool deleted = default)
-        {
-            return new DeleteContainerResponse(id, @object, deleted, additionalBinaryDataProperties: null);
-        }
-
-        public static CreateContainerFileBody CreateContainerFileBody(string fileId = default, BinaryData @file = default)
-        {
-            return new CreateContainerFileBody(fileId, @file, additionalBinaryDataProperties: null);
-        }
-
-        public static ContainerFileResource ContainerFileResource(string id = default, string @object = default, string containerId = default, DateTimeOffset createdAt = default, int bytes = default, string path = default, string source = default)
-        {
-            return new ContainerFileResource(
-                id,
-                @object,
-                containerId,
-                createdAt,
-                bytes,
-                path,
-                source,
-                additionalBinaryDataProperties: null);
-        }
-
-        public static ContainerFileListResource ContainerFileListResource(string @object = default, IEnumerable<ContainerFileResource> data = default, string firstId = default, string lastId = default, bool hasMore = default)
-        {
-            data ??= new ChangeTrackingList<ContainerFileResource>();
-
-            return new ContainerFileListResource(
-                @object,
-                data?.ToList(),
-                firstId,
-                lastId,
-                hasMore,
-                additionalBinaryDataProperties: null);
-        }
-
-        public static DeleteContainerFileResponse DeleteContainerFileResponse(string id = default, string @object = default, bool deleted = default)
-        {
-            return new DeleteContainerFileResponse(id, @object, deleted, additionalBinaryDataProperties: null);
-        }
-
-        public static RunGraderRequest RunGraderRequest(BinaryData grader = default, BinaryData item = default, string modelSample = default)
-        {
-            return new RunGraderRequest(grader, item, modelSample, additionalBinaryDataProperties: null);
-        }
-
-        public static RunGraderResponse RunGraderResponse(float reward = default, RunGraderResponseMetadata metadata = default, BinaryData subRewards = default, BinaryData modelGraderTokenUsagePerModel = default)
-        {
-            return new RunGraderResponse(reward, metadata, subRewards, modelGraderTokenUsagePerModel, additionalBinaryDataProperties: null);
-        }
-
-        public static RunGraderResponseMetadata RunGraderResponseMetadata(string name = default, string kind = default, RunGraderResponseMetadataErrors errors = default, float executionTime = default, BinaryData scores = default, int? tokenUsage = default, string sampledModelName = default)
-        {
-            return new RunGraderResponseMetadata(
-                name,
-                kind,
-                errors,
-                executionTime,
-                scores,
-                tokenUsage,
-                sampledModelName,
-                additionalBinaryDataProperties: null);
-        }
-
-        public static RunGraderResponseMetadataErrors RunGraderResponseMetadataErrors(bool formulaParseError = default, bool sampleParseError = default, bool truncatedObservationError = default, bool unresponsiveRewardError = default, bool invalidVariableError = default, bool otherError = default, bool pythonGraderServerError = default, string pythonGraderServerErrorType = default, bool pythonGraderRuntimeError = default, string pythonGraderRuntimeErrorDetails = default, bool modelGraderServerError = default, bool modelGraderRefusalError = default, bool modelGraderParseError = default, string modelGraderServerErrorDetails = default)
-        {
-            return new RunGraderResponseMetadataErrors(
-                formulaParseError,
-                sampleParseError,
-                truncatedObservationError,
-                unresponsiveRewardError,
-                invalidVariableError,
-                otherError,
-                pythonGraderServerError,
-                pythonGraderServerErrorType,
-                pythonGraderRuntimeError,
-                pythonGraderRuntimeErrorDetails,
-                modelGraderServerError,
-                modelGraderRefusalError,
-                modelGraderParseError,
-                modelGraderServerErrorDetails,
-                additionalBinaryDataProperties: null);
-        }
-
-        public static ValidateGraderRequest ValidateGraderRequest(BinaryData grader = default)
-        {
-            return new ValidateGraderRequest(grader, additionalBinaryDataProperties: null);
-        }
-
-        public static ValidateGraderResponse ValidateGraderResponse(BinaryData grader = default)
-        {
-            return new ValidateGraderResponse(grader, additionalBinaryDataProperties: null);
         }
     }
 }

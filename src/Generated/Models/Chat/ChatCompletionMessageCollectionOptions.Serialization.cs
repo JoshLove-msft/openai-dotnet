@@ -26,6 +26,21 @@ namespace OpenAI.Chat
             {
                 throw new FormatException($"The model {nameof(ChatCompletionMessageCollectionOptions)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(AfterId) && _additionalBinaryDataProperties?.ContainsKey("afterId") != true)
+            {
+                writer.WritePropertyName("afterId"u8);
+                writer.WriteStringValue(AfterId);
+            }
+            if (Optional.IsDefined(PageSizeLimit) && _additionalBinaryDataProperties?.ContainsKey("pageSizeLimit") != true)
+            {
+                writer.WritePropertyName("pageSizeLimit"u8);
+                writer.WriteNumberValue(PageSizeLimit.Value);
+            }
+            if (Optional.IsDefined(Order) && _additionalBinaryDataProperties?.ContainsKey("order") != true)
+            {
+                writer.WritePropertyName("order"u8);
+                writer.WriteStringValue(Order.Value.ToString());
+            }
             // Plugin customization: remove options.Format != "W" check
             if (_additionalBinaryDataProperties != null)
             {
@@ -73,6 +88,29 @@ namespace OpenAI.Chat
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("afterId"u8))
+                {
+                    afterId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("pageSizeLimit"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    pageSizeLimit = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("order"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    order = new ChatCompletionMessageCollectionOrder(prop.Value.GetString());
+                    continue;
+                }
                 // Plugin customization: remove options.Format != "W" check
                 additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }

@@ -26,6 +26,42 @@ namespace OpenAI.Chat
             {
                 throw new FormatException($"The model {nameof(ChatCompletionCollectionOptions)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(AfterId) && _additionalBinaryDataProperties?.ContainsKey("afterId") != true)
+            {
+                writer.WritePropertyName("afterId"u8);
+                writer.WriteStringValue(AfterId);
+            }
+            if (Optional.IsDefined(PageSizeLimit) && _additionalBinaryDataProperties?.ContainsKey("pageSizeLimit") != true)
+            {
+                writer.WritePropertyName("pageSizeLimit"u8);
+                writer.WriteNumberValue(PageSizeLimit.Value);
+            }
+            if (Optional.IsDefined(Order) && _additionalBinaryDataProperties?.ContainsKey("order") != true)
+            {
+                writer.WritePropertyName("order"u8);
+                writer.WriteStringValue(Order.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(Metadata) && _additionalBinaryDataProperties?.ContainsKey("metadata") != true)
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Model) && _additionalBinaryDataProperties?.ContainsKey("model") != true)
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(Model);
+            }
             // Plugin customization: remove options.Format != "W" check
             if (_additionalBinaryDataProperties != null)
             {
@@ -75,6 +111,55 @@ namespace OpenAI.Chat
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("afterId"u8))
+                {
+                    afterId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("pageSizeLimit"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    pageSizeLimit = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("order"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    order = new ChatCompletionCollectionOrder(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("metadata"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    metadata = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("model"u8))
+                {
+                    model = prop.Value.GetString();
+                    continue;
+                }
                 // Plugin customization: remove options.Format != "W" check
                 additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
