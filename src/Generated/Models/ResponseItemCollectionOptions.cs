@@ -6,7 +6,7 @@ using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
-namespace OpenAI.Responses
+namespace OpenAI
 {
     [Experimental("OPENAI001")]
     public partial class ResponseItemCollectionOptions

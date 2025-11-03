@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
-using OpenAI;
 
-namespace OpenAI.Responses
+namespace OpenAI
 {
     public partial class ResponseItemCollectionOptions : IJsonModel<ResponseItemCollectionOptions>
     {
